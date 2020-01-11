@@ -3,12 +3,15 @@ import './Header.css';
 import Button from '@material-ui/core/Button';
 import logo from '../../assets/logo.svg';
 import Modal from 'react-modal';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';    
 
 class Header extends Component{
     constructor(){
         super();
         this.state = {
-            modalIsOpen:false
+            modalIsOpen:false,
+            value:0
         };
     }
     modelOpenHandler = () => {
@@ -18,6 +21,9 @@ class Header extends Component{
     modalCloseHandler = () => {
         this.setState({modalIsOpen:false});
     }
+    tabChangeHandler = (event,value) => {
+        this.setState({value});
+    }
     render(){
         return(
             <div>
@@ -25,7 +31,13 @@ class Header extends Component{
                     <img src={logo} alt="logo" className='app-logo'/>
                     <Button className='loginButton' variant="contained" color="default" onClick={this.modelOpenHandler}>Login</Button>
                 </header>
-                <Modal ariaHideApp={false} isOpen={this.state.modalIsOpen} contentLabel="Login" onRequestClose={this.modalCloseHandler} ></Modal>
+                <Modal ariaHideApp={false} isOpen={this.state.modalIsOpen} contentLabel="Login" onRequestClose={this.modalCloseHandler} >
+                <Tabs value={this.state.value} onChange={this.tabChangeHandler}>
+                    <Tab label="Login"/>
+                    <Tab label="Register"/>
+                </Tabs>
+
+                </Modal>
             </div>
         );          
         }
