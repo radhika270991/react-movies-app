@@ -18,6 +18,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import genres from './../../common/genres';
 import artists from './../../common/artists';
+import TextField from '@material-ui/core/TextField';
 
 const styles = theme => ({
     root: {
@@ -157,6 +158,24 @@ class Home extends Component {
                                            
                                        </Select>                                     
                                 </FormControl>
+                                <FormControl className={classes.formControl}>
+                                    <TextField 
+                                    id="releaseStartDate"
+                                    label="Release Date Start"
+                                    type="date"
+                                    defaultValue=""
+                                    InputLabelProps={{shrink:true}}
+                                    />
+                                    </FormControl>
+                                    <FormControl className={classes.formControl}>
+                                    <TextField 
+                                    id="releaseEndDate"
+                                    label="Release Date End"
+                                    type="date"
+                                    defaultValue=""
+                                    InputLabelProps={{shrink:true}}
+                                    />
+                                    </FormControl>
                             </CardContent>
                         </Card>
                     </div>
