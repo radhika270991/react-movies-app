@@ -12,6 +12,12 @@ import Typography from '@material-ui/core/Typography';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
+import Select from '@material-ui/core/Select';
+import Checkbox from '@material-ui/core/Checkbox';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import genres from './../../common/genres';
+import artists from './../../common/artists';
 
 const styles = theme => ({
     root: {
@@ -48,12 +54,24 @@ class Home extends Component {
     constructor() {
         super();
         this.state = {
-            movieName:""
+            movieName:"",
+            genres:[],
+            artists:[]
         };
     }
 
     movieNameChangeHandler = event => {
         this.setState({movieName:event.target.value});
+    };
+
+    genreChangeHAndler = event => {
+        this.setState({genres:event.target.value});
+        console.log(this.state.genres);
+    };
+
+    artistChangeHandler = event => {
+        this.setState({artists:event.target.value});
+        console.log(this.state.artists);
     };
 
     render() {
@@ -97,10 +115,47 @@ class Home extends Component {
                                 </FormControl>
                                 <FormControl className={classes.formControl}>
                                     <InputLabel htmlFor="movieName">Movie Name</InputLabel>
-                                        <Input id="movieName" onChange={this.movieNameChangeHandler}>
-                                        
-                                        </Input>
-                                    
+                                        <Input id="movieName" onChange={this.movieNameChangeHandler}></Input>                                    
+                                </FormControl>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="genreName">Genre</InputLabel>
+                                       <Select 
+                                       multiple
+                                       input={<Input id="genreName" />}
+                                       renderValue={selected => selected.join(',')}
+                                       value = {this.state.genres}
+                                       onChange={this.genreChangeHAndler}>
+                                            <MenuItem value="0">None</MenuItem>
+                                            {
+                                                genres.map(genre => (
+                                                    <MenuItem key={genre.id} value={genre.name}>
+                                                        <Checkbox checked={this.state.genres.indexOf(genre.name) > -1}></Checkbox>
+                                                        <ListItemText primary={genre.name}></ListItemText>
+                                                    </MenuItem>
+                                                ))
+                                            }
+                                           
+                                       </Select>                                     
+                                </FormControl>
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="atristName">Artist</InputLabel>
+                                       <Select 
+                                       multiple
+                                       input={<Input id="atristName" />}
+                                       renderValue={selected => selected.join(',')}
+                                       value = {this.state.artists}
+                                       onChange={this.artistChangeHandler}>
+                                            <MenuItem value="0">None</MenuItem>
+                                            {
+                                                artists.map(artist => (
+                                                    <MenuItem key={artist.id} value={artist.first_name + artist.last_name}>
+                                                        <Checkbox checked={this.state.artists.indexOf(artist.first_name+ artist.last_name) > -1}></Checkbox>
+                                                        <ListItemText primary={artist.first_name + artist.last_name}></ListItemText>
+                                                    </MenuItem>
+                                                ))
+                                            }
+                                           
+                                       </Select>                                     
                                 </FormControl>
                             </CardContent>
                         </Card>
