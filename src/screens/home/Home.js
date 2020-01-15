@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './Home.css';
+import ReactDOM from 'react-dom';
 import Header from '../../common/header/Header';
+import Details from '../details/Details';
 import { withStyles } from '@material-ui/core/styles';
 import moviesData from '../../common/movieData';
 import GridList from '@material-ui/core/GridList';
@@ -76,6 +78,11 @@ class Home extends Component {
         console.log(this.state.artists);
     };
 
+    tileClickHandler = (movieId) => {
+        ReactDOM.render(<Details movieId={movieId}/>, document.getElementById('root'));
+
+    } 
+
     render() {
         const { classes } = this.props;
         return (
@@ -97,7 +104,7 @@ class Home extends Component {
                     <div className="left">
                         <GridList cellHeight={350} cols={4} className={classes.gridListMain}>
                             {moviesData.map(movie => (
-                                <GridListTile className="released-movie-grid-item" key={"grid" + movie.id}>
+                                <GridListTile className="released-movie-grid-item" key={"grid" + movie.id} onClick={() => this.tileClickHandler(movie.id)}>
                                     <img src={movie.poster_url} className="movie-poster" alt={movie.title} />
                                     <GridListTileBar
                                         title={movie.title}
