@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import './Header.css';
-import Button from '@material-ui/core/Button';
 import logo from '../../assets/logo.svg';
 import Modal from 'react-modal';
 import Tabs from '@material-ui/core/Tabs';
@@ -11,6 +10,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
 import PropTypes from 'prop-types';
 import FormHelperText from '@material-ui/core/FormHelperText';
+import Button from '@material-ui/core/Button';
 
 const customStyles = {
     content: {
