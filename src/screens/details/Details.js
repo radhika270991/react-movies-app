@@ -6,13 +6,44 @@ import './Details.css';
 import ReactDOM from 'react-dom';
 import Home from '../home/Home';
 import YouTube from 'react-youtube';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 class Details extends Component {
 
     constructor() {
         super();
         this.state = {
-            movie: {}
+            movie: {},
+            starIcons: [
+                {
+                    id: 1,
+                    stateId: "star1",
+                    color: "black"
+                },
+                {
+                    id: 2,
+                    stateId: "star2",
+                    color: "black"
+                },
+                {
+                    id: 3,
+                    stateId: "star3",
+                    color: "black"
+                },
+                {
+                    id: 4,
+                    stateId: "star4",
+                    color: "black"
+                },
+                {
+                    id: 5,
+                    stateId: "star5",
+                    color: "black"
+                }
+            ]
         }
     }
 
@@ -25,17 +56,33 @@ class Details extends Component {
         console.log(this.state);
     }
 
-    backToHomeHandler = () =>{
-        ReactDOM.render(<Home/>,document.getElementById('root'));
+    backToHomeHandler = () => {
+        ReactDOM.render(<Home />, document.getElementById('root'));
+    }
+
+    starClickHandler = (id) => {
+        let starIcons = [];
+
+        for(let star of this.state.starIcons) {
+            let starNode = star;
+            if(star.id <= id){
+                starNode.color = "yellow";
+            }
+            else {
+                starNode.color = "black";
+            }
+            starIcons.push(starNode);
+        }
+        this.setState({starIcons:starIcons});
     }
 
     render() {
         let movie = this.state.movie;
         let opts = {
-            height:'300',
-            width:'700',
+            height: '300',
+            width: '700',
             playerVars: {
-                autoplay:1
+                autoplay: 1
             }
         }
         return (
@@ -48,7 +95,7 @@ class Details extends Component {
                 </div>
                 <div className='flex-containerDetails'>
                     <div className="leftDetails">
-                        <img src={movie.poster_url} alt={movie.title}/>
+                        <img src={movie.poster_url} alt={movie.title} />
                     </div>
                     <div className="middleDetails">
                         <div>
@@ -89,10 +136,34 @@ class Details extends Component {
                                 onReady={this._onReady}
                             />
                         </div>
-                        
-                    <div className="rightDetails"></div>
+
+                    </div>
+
+                    <div className="rightDetails">
+                        <Typography>
+                            <span className="bold">Rate this movie:</span>
+                        </Typography>
+                        {this.state.starIcons.map(star  => (
+                            <StarBorderIcon className={star.color} key={"stars"+star.id} onClick={() => this.starClickHandler(star.id)}></StarBorderIcon>
+                        ))}
+                        <div>
+                            <Typography>
+                                <span className="bold">Artists:</span>
+                            </Typography>
+                        </div>
+                        <br />
+
+                        <GridList cols={2}>
+                            {movie.artists.map(artist => (
+                                <GridListTile key={artist.id}>
+                                    <img src={artist.profile_url} alt={artist.first_name + artist.last_name} ></img>
+                                    <a href={artist.wiki_url} target="_blank"><GridListTileBar title={artist.first_name + " " + artist.last_name}>
+                                    </GridListTileBar></a>
+                                </GridListTile>
+                            ))}
+                        </GridList>
+                    </div>
                 </div>
-            </div>
             </div>
         );
 
