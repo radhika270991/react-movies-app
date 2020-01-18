@@ -15,34 +15,42 @@ import Input from '@material-ui/core/Input';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
+import Button from '@material-ui/core/Button';
 
 class BookShow extends Component {
-    constructor(){
+    constructor() {
         super();
         this.state = {
-            location:"",
-            date:"",
-            language:"",
-            time:""
+            location: "",
+            date: "",
+            language: "",
+            time: "",
+            unitPrice: 500,
+            tickets: 0,
+            availableTickets: 20
         }
     }
 
     locationChangeHandler = (event) => {
-        this.setState({location:event.target.value});
+        this.setState({ location: event.target.value });
     }
 
     dateChangeHandler = (event) => {
-        this.setState({date:event.target.value});
+        this.setState({ date: event.target.value });
     }
     languageChangeHandler = (event) => {
-        this.setState({language:event.target.value});
+        this.setState({ language: event.target.value });
     }
     timeChangeHandler = (event) => {
-        this.setState({time:event.target.value});
+        this.setState({ time: event.target.value });
     }
 
     backToHomeHandler = () => {
         ReactDOM.render(<Home />, document.getElementById('root'));
+    }
+
+    ticketChangeHandler = (event) => {
+        this.setState({ tickets: event.target.value });
     }
     render() {
         return (<div>
@@ -57,50 +65,63 @@ class BookShow extends Component {
                     <Typography variant="headline" component="h2">
                         BOOK SHOW
                     </Typography>
-                    <FormControl className="formControl">
+                    <FormControl required className="formControl">
                         <InputLabel htmlFor="location">Location</InputLabel>
-                        <Select id="location" value={this.state.location} onChange = {this.locationChangeHandler}>
+                        <Select id="location" value={this.state.location} onChange={this.locationChangeHandler}>
                             {location.map(loc => (
-                                <MenuItem key={"loc "+loc.id} value={loc.location}>
+                                <MenuItem key={"loc " + loc.id} value={loc.location}>
                                     <ListItemText primary={loc.location}></ListItemText>
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
-                    <br/><br/>
-                    <FormControl className="formControl">
+                    <br /><br />
+                    <FormControl required className="formControl">
                         <InputLabel htmlFor="language">Language</InputLabel>
-                        <Select id="language" value={this.state.language} onChange = {this.languageChangeHandler}>
+                        <Select id="language" value={this.state.language} onChange={this.languageChangeHandler}>
                             {language.map(lan => (
-                                <MenuItem key={"lan "+lan.id} value={lan.language}>
+                                <MenuItem key={"lan " + lan.id} value={lan.language}>
                                     <ListItemText primary={lan.language}></ListItemText>
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
-                    <br/><br/>
-                    <FormControl className="formControl">
+                    <br /><br />
+                    <FormControl required className="formControl">
                         <InputLabel htmlFor="date">Date</InputLabel>
-                        <Select id="date" value={this.state.date} onChange = {this.dateChangeHandler}>
+                        <Select id="date" value={this.state.date} onChange={this.dateChangeHandler}>
                             {showDate.map(dt => (
-                                <MenuItem key={"date "+dt.id} value={dt.showDate}>
+                                <MenuItem key={"date " + dt.id} value={dt.showDate}>
                                     <ListItemText primary={dt.showDate}></ListItemText>
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
-                    <br/><br/>
-                    <FormControl className="formControl">
+                    <br /><br />
+                    <FormControl required className="formControl">
                         <InputLabel htmlFor="time">Time</InputLabel>
-                        <Select id="time" value={this.state.time} onChange = {this.timeChangeHandler}>
+                        <Select id="time" value={this.state.time} onChange={this.timeChangeHandler}>
                             {showTime.map(tm => (
-                                <MenuItem key={"time "+tm.id} value={tm.showTime}>
+                                <MenuItem key={"time " + tm.id} value={tm.showTime}>
                                     <ListItemText primary={tm.showTime}></ListItemText>
                                 </MenuItem>
                             ))}
                         </Select>
                     </FormControl>
-                    <br/><br/>
+                    <br /><br />
+                    <FormControl required className="formControl">
+                        <InputLabel htmlFor="tickets">Tickets: ({this.state.availableTickets} Available)</InputLabel>
+                        <Input id="tickets" value={this.state.tickets !== 0 ?this.state.tickets : "" } onChange={this.ticketChangeHandler}></Input>
+                    </FormControl><br/><br/>                    
+                    <Typography>
+                        Unit Price : {this.state.unitPrice}
+                    </Typography><br/>
+                    <Typography>
+                        Total Price : {this.state.unitPrice * this.state.tickets}
+                    </Typography><br/><br/>
+                    <Button variant="contained" color="primary">
+                        Book Show
+                    </Button>
                 </CardContent>
             </Card>
         </div>)
