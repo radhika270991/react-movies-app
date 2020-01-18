@@ -1,11 +1,108 @@
-import React,{Component} from 'react';
-import REACTDOM from 'react-dom';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import Header from '../../common/header/Header';
+import Home from '../../screens/home/Home';
+import Typography from '@material-ui/core/Typography';
+import language from '../../common/language';
+import location from '../../common/location';
+import showDate from '../../common/showDate';
+import showTime from '../../common/showTime';
+import { Card, CardContent } from '@material-ui/core';
+import './BookShow.css';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 class BookShow extends Component {
-    render(){
+    constructor(){
+        super();
+        this.state = {
+            location:"",
+            date:"",
+            language:"",
+            time:""
+        }
+    }
+
+    locationChangeHandler = (event) => {
+        this.setState({location:event.target.value});
+    }
+
+    dateChangeHandler = (event) => {
+        this.setState({date:event.target.value});
+    }
+    languageChangeHandler = (event) => {
+        this.setState({language:event.target.value});
+    }
+    timeChangeHandler = (event) => {
+        this.setState({time:event.target.value});
+    }
+
+    backToHomeHandler = () => {
+        ReactDOM.render(<Home />, document.getElementById('root'));
+    }
+    render() {
         return (<div>
-            <Header/>
+            <Header />
+            <div className="bookShow">
+                <Typography className="back" onClick={this.backToHomeHandler}>
+                    &#60; Back To Home
+                    </Typography>
+            </div>
+            <Card className="cardStyle">
+                <CardContent>
+                    <Typography variant="headline" component="h2">
+                        BOOK SHOW
+                    </Typography>
+                    <FormControl className="formControl">
+                        <InputLabel htmlFor="location">Location</InputLabel>
+                        <Select id="location" value={this.state.location} onChange = {this.locationChangeHandler}>
+                            {location.map(loc => (
+                                <MenuItem key={"loc "+loc.id} value={loc.location}>
+                                    <ListItemText primary={loc.location}></ListItemText>
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <br/><br/>
+                    <FormControl className="formControl">
+                        <InputLabel htmlFor="language">Language</InputLabel>
+                        <Select id="language" value={this.state.language} onChange = {this.languageChangeHandler}>
+                            {language.map(lan => (
+                                <MenuItem key={"lan "+lan.id} value={lan.language}>
+                                    <ListItemText primary={lan.language}></ListItemText>
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <br/><br/>
+                    <FormControl className="formControl">
+                        <InputLabel htmlFor="date">Date</InputLabel>
+                        <Select id="date" value={this.state.date} onChange = {this.dateChangeHandler}>
+                            {showDate.map(dt => (
+                                <MenuItem key={"date "+dt.id} value={dt.showDate}>
+                                    <ListItemText primary={dt.showDate}></ListItemText>
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <br/><br/>
+                    <FormControl className="formControl">
+                        <InputLabel htmlFor="time">Time</InputLabel>
+                        <Select id="time" value={this.state.time} onChange = {this.timeChangeHandler}>
+                            {showTime.map(tm => (
+                                <MenuItem key={"time "+tm.id} value={tm.showTime}>
+                                    <ListItemText primary={tm.showTime}></ListItemText>
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    <br/><br/>
+                </CardContent>
+            </Card>
         </div>)
     }
 }
